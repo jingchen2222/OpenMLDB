@@ -11,7 +11,6 @@ on:
 
 env:
   GIT_SUBMODULE_STRATEGY: recursive
-  HYBRIDSE_SOURCE: download
 
 jobs:
   java-sdk:
@@ -24,7 +23,7 @@ jobs:
       - name: build jsdk and package
         run: |
           echo "build jsdk and pysdk"
-#          bash steps/init_env.sh ${{ env.HYBRIDSE_SOURCE }}
+#          bash steps/init_env.sh
 #          mkdir -p build
 #          source /root/.bashrc && cd build && cmake -DSQL_PYSDK_ENABLE=OFF -DSQL_JAVASDK_ENABLE=ON -DTESTING_ENABLE=OFF .. && make -j$(nproc) sql_javasdk_package openmldb && cd ../
 #
@@ -54,7 +53,7 @@ jobs:
 #      - uses: actions/checkout@v1
 #      - name: build pysdk and sqlalchemy
 #        run: |
-#          bash steps/init_env.sh ${{ env.HYBRIDSE_SOURCE }}
+#          bash steps/init_env.sh
 #          mkdir -p build
 #          source /root/.bashrc && cd build && cmake -DSQL_PYSDK_ENABLE=ON -DSQL_JAVASDK_ENABLE=OFF -DTESTING_ENABLE=OFF .. && make -j$(nproc) sqlalchemy_openmldb openmldb && cd ../
 #      - name: test sqlalchemy

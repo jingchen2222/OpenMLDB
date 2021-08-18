@@ -11,7 +11,6 @@ on:
 
 env:
   GIT_SUBMODULE_STRATEGY: recursive
-  HYBRIDSE_SOURCE: download
 
 jobs:
   sql_sdk_test:
@@ -23,7 +22,7 @@ jobs:
       - name: build
         run: |
           echo "sql_sdk_test build ... "
-#          bash steps/init_env.sh ${{ env.HYBRIDSE_SOURCE }}
+#          bash steps/init_env.sh
 #          mkdir -p build
 #          source /root/.bashrc && cd build && cmake -DSQL_PYSDK_ENABLE=OFF -DSQL_JAVASDK_ENABLE=OFF -DTESTING_ENABLE=ON .. && make -j$(nproc) sql_sdk_test && cd ../
 #      - name: run sql_sdk_test

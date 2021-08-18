@@ -3,16 +3,15 @@ name: openmldb-deploy
 on:
   # the action will only run on workflows completed
   workflow_run:
-    workflows: ["build-and-test", "cpp-sdk-test", "cpp-sdk-cluster-test", "java-python-sdk-test"]
+    workflows: ["build-and-test", "cpp-sdk-test", "cpp-sdk-cluster-test"]
     types:
       - completed
 env:
   GIT_SUBMODULE_STRATEGY: recursive
-  HYBRIDSE_SOURCE: download
 
 jobs:
   build-and-pack:
-    if: ${{ github.event.action == 'completed' && github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/4paradigm/hybridsql:0.4.0
@@ -23,7 +22,7 @@ jobs:
       - name: build
         run: |
           echo "build and pack ...."
-#          bash steps/init_env.sh ${{ env.HYBRIDSE_SOURCE }}
+#          bash steps/init_env.sh
 #          mkdir -p build
 #          source /root/.bashrc && cd build && cmake -DSQL_PYSDK_ENABLE=ON -DSQL_JAVASDK_ENABLE=ON -DTESTING_ENABLE=OFF
 #          .. && make -j$(nproc) && make -j$(nproc) sqlalchemy_openmldb && cd ../
@@ -101,7 +100,7 @@ jobs:
 #
 #      - name: upload to maven
 #        run: |
-#          bash steps/init_env.sh ${{ env.HYBRIDSE_SOURCE }}
+#          bash steps/init_env.sh
 #          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
 #          VERSION=$(echo $VERSION | sed -e 's/^v//')
 #          sh steps/package_openmldb_javasdk.sh $VERSION
