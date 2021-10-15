@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - feat/test_prerelease
     tags:
       - hybridse-v*
   pull_request:
@@ -304,7 +305,28 @@ jobs:
             hybridse-*.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  pre-release:
+    runs-on: ubuntu-latest
+    needs: [ "linux-build", "macos-build" ]
+    if: >
+      success() && github.event_name == 'push'
+    steps:
+      - name: Download Release Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: release-artifacts
 
+      - name: PreRelease
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            hybridse-*.tar.gz
+          draft: true
+          prerelease: true
+          name: hybridse-draft
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   publish-test-results:
     runs-on: ubuntu-latest
     needs: ["linux-build", "macos-build"]
