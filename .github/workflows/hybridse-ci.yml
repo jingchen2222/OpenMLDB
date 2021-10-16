@@ -20,7 +20,7 @@ defaults:
 
 env:
   HYBRIDSE_PATH: hybridse
-  HYBRIDSE_SNAPSHOT_VERSION: SNAPSHOT-0.2.4
+  HYBRIDSE_SNAPSHOT_VERSION: hybridse-v0.2.4-SNAPSHOT
 
 jobs:
   linux-build:
@@ -113,7 +113,8 @@ jobs:
             VERSION=$(echo $VERSION | sed -e 's/^hybridse-v//')
             HYBRIDSE_VERSION=$VERSION ./tools/hybridse_deploy.sh
           else
-            HYBRIDSE_VERSION=${{ env.HYBRIDSE_SNAPSHOT_VERSION }} ./tools/hybridse_deploy.sh
+            VERSION=$(echo ${{ env.HYBRIDSE_SNAPSHOT_VERSION }} | sed -e 's/^hybridse-v//')
+            HYBRIDSE_VERSION=$VERSION ./tools/hybridse_deploy.sh
           fi
 
       - name: Upload Artifacts
@@ -216,7 +217,8 @@ jobs:
             VERSION=$(echo $VERSION | sed -e 's/^hybridse-v//')
             HYBRIDSE_VERSION=$VERSION ./tools/hybridse_deploy.sh
           else
-            HYBRIDSE_VERSION=${{ env.HYBRIDSE_SNAPSHOT_VERSION }} ./tools/hybridse_deploy.sh
+            VERSION=$(echo ${{ env.HYBRIDSE_SNAPSHOT_VERSION }} | sed -e 's/^hybridse-v//')
+            HYBRIDSE_VERSION=$VERSION ./tools/hybridse_deploy.sh
           fi
 
       - name: Upload Artifacts
@@ -324,8 +326,8 @@ jobs:
             hybridse-*.tar.gz
           draft: true
           prerelease: true
-          name: "hybridse-"${{ env.HYBRIDSE_SNAPSHOT_VERSION }}
-          tag_name: "hybridse-"${{ env.HYBRIDSE_SNAPSHOT_VERSION }}
+          name: ${{ env.HYBRIDSE_SNAPSHOT_VERSION }}
+          tag_name: ${{ env.HYBRIDSE_SNAPSHOT_VERSION }}
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
